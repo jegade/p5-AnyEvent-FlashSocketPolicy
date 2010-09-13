@@ -20,7 +20,7 @@ AnyEvent::FlashSocketPolicy is
 
 =head1 AUTHOR
 
-keroyonn E<lt>keroyonn@gmail.comE<gt>
+keroyonn E<lt>keroyon@cpan.orgE<gt>
 
 =head1 SEE ALSO
 
