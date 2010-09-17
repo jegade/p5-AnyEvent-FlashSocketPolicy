@@ -5,6 +5,8 @@ use Test::TCP;
 use IO::Socket::INET;
 use AnyEvent::FlashSocketPolicy;
 
+SKIP: {
+    skip 'skip', 1;
 test_tcp(
     client => sub {
         my $port = shift;
@@ -31,4 +33,5 @@ test_tcp(
         $server->run;
     }
 );
+};
 

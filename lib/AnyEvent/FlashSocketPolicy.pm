@@ -1,6 +1,6 @@
 package AnyEvent::FlashSocketPolicy;
-our $VERSION = '0.01';
 use Moose;
+our $VERSION = '0.01';
 use Moose::Util::TypeConstraints;
 use AnyEvent;
 use AnyEvent::Handle;
