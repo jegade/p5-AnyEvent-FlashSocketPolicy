@@ -1,20 +1,105 @@
 =head1 NAME
 
-AnyEvent::FlashSocketPolicy -
+AnyEvent::FlashSocketPolicy - Asynchronous socket policy file server for a flash socket connection.
 
 =head1 SYNOPSIS
 
   use AnyEvent::FlashSocketPolicy;
+  my $server = AnyEvent::FlashSocketPolicy->new(
+      permitted_cross_domain_policies => 'master-only',
+      domain => '*',
+      to_ports => '5000',
+  );
+  $server->run;
+
+  Or just like this.
+
+  % flash-socket-policy-server --domain-policy=master-only --domain='*' --to-ports=5000 &
+
 
 =head1 DESCRIPTION
 
-AnyEvent::FlashSocketPolicy is
+AnyEvent::FlashSocketPolicy is A simple Asynchronous socket policy file server with AnyEvent::Socket.
+
+It is faster than adobe's one which using inetd, and flexibly customizable.
+
+=head1 METHODS
+
+=head2 new(%options)
+
+Create flash socket policy file server.
+
+    my $server = AnyEvent::FlashSocketPolicy->new(
+        permitted_cross_domain_policies => 'master-only',
+        domain => '*',
+        to_ports => '5000',
+    );
+
+Available options are:
+
+=over
+
+=item permitted_cross_domain_policies
+
+=item domain
+
+=item to_ports
+
+=item port
+
+=item policy
+
+=back
+
+=head2 run
+
+Start the server.
+
+=head1 DEPENDENCIES
+
+=over
+
+=item L<Any::Moose>
+
+=item L<AnyEvent>
+
+=item L<AnyEvent::Handle>
+
+=item L<AnyEvent::Socket>
+
+=item L<Getopt::Long>
+
+=item L<Pod::Usage>
+
+=item L<Text::MicroTemplate>
+
+=item L<Try::Tiny>
+
+=back
+
+=head1 TODO
+
+=over
+
+=item Logging
+
+=item Exception handling
+
+=item Support reading existing files.
+
+=back
 
 =head1 AUTHOR
 
 keroyonn E<lt>keroyon@cpan.orgE<gt>
 
 =head1 SEE ALSO
+
+=over
+
+=item L<AnyEvent::Socket>
+
+=back
 
 =head1 LICENSE
 

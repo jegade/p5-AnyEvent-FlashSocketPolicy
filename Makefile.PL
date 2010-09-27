@@ -6,13 +6,14 @@ readme_markdown_from 'lib/AnyEvent/FlashSocketPolicy.pm';
 readme_pod_from 'lib/AnyEvent/FlashSocketPolicy.pm';
 githubmeta;
 
-requires 'Moose';
-requires 'Moose::Util::TypeConstraints';
+requires 'Any::Moose';
 requires 'AnyEvent';
 requires 'AnyEvent::Handle';
 requires 'AnyEvent::Socket';
-requires 'Socket';
+requires 'Getopt::Long';
+requires 'Pod::Usage';
 requires 'Text::MicroTemplate';
+requires 'Try::Tiny';
 
 include 'Module::AutoInstall';
 install_script 'bin/flash-socket-policy-server';
