@@ -1,16 +1,69 @@
 NAME
-    AnyEvent::FlashSocketPolicy -
+    AnyEvent::FlashSocketPolicy - Asynchronous socket policy file server for
+    a flash socket connection.
 
 SYNOPSIS
       use AnyEvent::FlashSocketPolicy;
+      my $server = AnyEvent::FlashSocketPolicy->new(
+          permitted_cross_domain_policies => 'master-only',
+          domain => '*',
+          to_ports => '5000',
+      );
+      $server->run;
+
+      Or just like this.
+
+      % flash-socket-policy-server --domain-policy=master-only --domain='*' --to-ports=5000 &
 
 DESCRIPTION
-    AnyEvent::FlashSocketPolicy is
+    AnyEvent::FlashSocketPolicy is A simple Asynchronous socket policy file
+    server with AnyEvent::Socket.
+
+    It is faster than adobe's one which using inetd, and flexibly
+    customizable.
+
+METHODS
+  new(%options)
+    Create flash socket policy file server.
+
+        my $server = AnyEvent::FlashSocketPolicy->new(
+            permitted_cross_domain_policies => 'master-only',
+            domain => '*',
+            to_ports => '5000',
+        );
+
+    Available options are:
+
+    permitted_cross_domain_policies
+    domain
+    to_ports
+    port
+    policy
+
+  run
+    Start the server.
+
+DEPENDENCIES
+    Any::Moose
+    AnyEvent
+    AnyEvent::Handle
+    AnyEvent::Socket
+    Getopt::Long
+    Pod::Usage
+    Text::MicroTemplate
+    Try::Tiny
+
+TODO
+    Logging
+    Exception handling
+    Support reading existing files.
 
 AUTHOR
     keroyonn <keroyon@cpan.org>
 
 SEE ALSO
+    AnyEvent::Socket
+
 LICENSE
     This library is free software; you can redistribute it and/or modify it
     under the same terms as Perl itself.

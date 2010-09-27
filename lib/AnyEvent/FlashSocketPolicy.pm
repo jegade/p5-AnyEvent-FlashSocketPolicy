@@ -1,13 +1,13 @@
 package AnyEvent::FlashSocketPolicy;
-use Moose;
-our $VERSION = '0.01';
-use Moose::Util::TypeConstraints;
+use Any::Moose;
+use Any::Moose '::Util::TypeConstraints';
 use AnyEvent;
 use AnyEvent::Handle;
 use AnyEvent::Socket;
 use Socket qw(IPPROTO_TCP TCP_NODELAY);
 use Text::MicroTemplate qw(render_mt);
 use Carp;
+use Try::Tiny;
 
 # TODO: IPアドレス制限
 # TODO: ベンチマーク
@@ -16,7 +16,10 @@ use Carp;
 # TODO: 例外処理
 # TODO: ログの生成
 
-use constant POLICY_REQUEST => sprintf '<policy-file-request/>%c', 0;
+use 5.008008;
+our $VERSION = '0.01_1';
+
+use constant POLICY_REQUEST => "<policy-file-request/>\0";
 use constant DEBUG          => $ENV{FLASH_SOCKET_POLICY_DEBUG} || 0;
 use constant LISTEN_PORT    => 843;
 use constant TEMPLATE       => <<'__TEMPLATE__';
@@ -26,7 +29,7 @@ use constant TEMPLATE       => <<'__TEMPLATE__';
     <site-control permitted-cross-domain-policies="<?= $_[0] ?>"/>
     <allow-access-from domain="<?= $_[1] ?>" to-ports="<?= $_[2] ?>"/>
 </cross-domain-policy>
-?= pack('c', 0)
+?= "\0"
 __TEMPLATE__
 
 enum CrossDomainPolicies => qw(all none master-only);
@@ -104,8 +107,13 @@ sub _create_accept_handler {
         };
 
         # setting TCP_NODELAY for prohibit NAGLE algorithm
-        setsockopt $sock, IPPROTO_TCP, TCP_NODELAY, 1;
-        DEBUG && warn "setting tcp_nodelay";
+        try {
+            setsockopt $sock, IPPROTO_TCP, TCP_NODELAY, 1;
+            DEBUG && warn "setting tcp_nodelay";
+        }
+        catch {
+            DEBUG && warn "Failed setting tcp_nodelay";
+        }
     };
 }
 
@@ -143,28 +151,113 @@ sub run {
 
 __PACKAGE__->meta->make_immutable;
 
-no Moose;
+no Any::Moose;
 1;
 
 __END__
 
 =head1 NAME
 
-AnyEvent::FlashSocketPolicy -
+AnyEvent::FlashSocketPolicy - Asynchronous socket policy file server for a flash socket connection.
 
 =head1 SYNOPSIS
 
   use AnyEvent::FlashSocketPolicy;
+  my $server = AnyEvent::FlashSocketPolicy->new(
+      permitted_cross_domain_policies => 'master-only',
+      domain => '*',
+      to_ports => '5000',
+  );
+  $server->run;
+
+  Or just like this.
+
+  % flash-socket-policy-server --domain-policy=master-only --domain='*' --to-ports=5000 &
+
 
 =head1 DESCRIPTION
 
-AnyEvent::FlashSocketPolicy is
+AnyEvent::FlashSocketPolicy is A simple Asynchronous socket policy file server with AnyEvent::Socket.
+
+It is faster than adobe's one which using inetd, and flexibly customizable.
+
+=head1 METHODS
+
+=head2 new(%options)
+
+Create flash socket policy file server.
+
+    my $server = AnyEvent::FlashSocketPolicy->new(
+        permitted_cross_domain_policies => 'master-only',
+        domain => '*',
+        to_ports => '5000',
+    );
+
+Available options are:
+
+=over
+
+=item permitted_cross_domain_policies
+
+=item domain
+
+=item to_ports
+
+=item port
+
+=item policy
+
+=back
+
+=head2 run
+
+Start the server.
+
+=head1 DEPENDENCIES
+
+=over
+
+=item L<Any::Moose>
+
+=item L<AnyEvent>
+
+=item L<AnyEvent::Handle>
+
+=item L<AnyEvent::Socket>
+
+=item L<Getopt::Long>
+
+=item L<Pod::Usage>
+
+=item L<Text::MicroTemplate>
+
+=item L<Try::Tiny>
+
+=back
+
+=head1 TODO
+
+=over
+
+=item Logging
+
+=item Exception handling
+
+=item Support reading existing files.
+
+=back
 
 =head1 AUTHOR
 
 keroyonn E<lt>keroyon@cpan.orgE<gt>
 
 =head1 SEE ALSO
+
+=over
+
+=item L<AnyEvent::Socket>
+
+=back
 
 =head1 LICENSE
 
