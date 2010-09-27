@@ -9,7 +9,10 @@ use Socket qw(IPPROTO_TCP TCP_NODELAY);
 use Text::MicroTemplate qw(render_mt);
 use Carp;
 
+# TODO: IPアドレス制限
+# TODO: ベンチマーク
 # TODO: 指定されたポリシーファイルの読み込み
+# TODO: ポリシーファイルの変更監視
 # TODO: 例外処理
 # TODO: ログの生成
 
