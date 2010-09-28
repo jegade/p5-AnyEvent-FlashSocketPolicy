@@ -22,6 +22,9 @@ tests 't/*.t';
 author_tests 'xt';
 
 build_requires 'Test::More';
+build_requires 'Perl6::Slurp';
+build_requires 'Test::TCP';
+
 auto_set_repository;
 auto_include;
 WriteAll;

@@ -14,10 +14,10 @@ use Try::Tiny;
 # TODO: 指定されたポリシーファイルの読み込み
 # TODO: ポリシーファイルの変更監視
 # TODO: 例外処理
-# TODO: ログの生成
+# TODO: ログの生成(不正なリクエストヘッダ。アクセス元IPアドレス)
 
 use 5.008008;
-our $VERSION = '0.01_1';
+our $VERSION = '0.02';
 
 use constant POLICY_REQUEST => "<policy-file-request/>\0";
 use constant DEBUG          => $ENV{FLASH_SOCKET_POLICY_DEBUG} || 0;
