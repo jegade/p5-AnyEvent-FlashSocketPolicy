@@ -99,6 +99,7 @@ sub _create_accept_handler {
             $self->_write($sock)->cb(
                 sub {
                     shutdown $sock, 1;
+                    close $sock;
                     local $@;
                     eval { $_[0]->recv; 1 } or croak 'die...';
                 }
@@ -121,6 +122,7 @@ sub _write {
     my($self, $sock) = @_;
     my $ret = AE::cv;
     my $handle = AnyEvent::Handle->new( fh => $sock );
+    
     $handle->on_error(
         sub {
             my $err = $_[2];

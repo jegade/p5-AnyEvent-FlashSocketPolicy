@@ -19,7 +19,7 @@ AnyEvent::FlashSocketPolicy - Asynchronous socket policy file server for a flash
 
 =head1 DESCRIPTION
 
-AnyEvent::FlashSocketPolicy is A simple Asynchronous socket policy file server with AnyEvent::Socket.
+AnyEvent::FlashSocketPolicy is a simple asynchronous socket policy file server with AnyEvent::Socket.
 
 It is faster than adobe's one which using inetd, and flexibly customizable.
 

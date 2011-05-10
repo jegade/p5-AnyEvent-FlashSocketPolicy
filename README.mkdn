@@ -20,7 +20,7 @@ AnyEvent::FlashSocketPolicy - Asynchronous socket policy file server for a flash
 
 # DESCRIPTION
 
-AnyEvent::FlashSocketPolicy is A simple Asynchronous socket policy file server with AnyEvent::Socket.
+AnyEvent::FlashSocketPolicy is a simple asynchronous socket policy file server with AnyEvent::Socket.
 
 It is faster than adobe's one which using inetd, and flexibly customizable.
 
@@ -39,13 +39,9 @@ Create flash socket policy file server.
 Available options are:
 
 - permitted_cross_domain_policies
-
 - domain
-
 - to_ports
-
 - port
-
 - policy
 
 ## run
@@ -55,27 +51,18 @@ Start the server.
 # DEPENDENCIES
 
 - [Any::Moose](http://search.cpan.org/perldoc?Any::Moose)
-
 - [AnyEvent](http://search.cpan.org/perldoc?AnyEvent)
-
 - [AnyEvent::Handle](http://search.cpan.org/perldoc?AnyEvent::Handle)
-
 - [AnyEvent::Socket](http://search.cpan.org/perldoc?AnyEvent::Socket)
-
 - [Getopt::Long](http://search.cpan.org/perldoc?Getopt::Long)
-
 - [Pod::Usage](http://search.cpan.org/perldoc?Pod::Usage)
-
 - [Text::MicroTemplate](http://search.cpan.org/perldoc?Text::MicroTemplate)
-
 - [Try::Tiny](http://search.cpan.org/perldoc?Try::Tiny)
 
 # TODO
 
 - Logging
-
 - Exception handling
-
 - Support reading existing files.
 
 # AUTHOR
